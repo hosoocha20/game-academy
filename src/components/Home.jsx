@@ -10,6 +10,7 @@ const Home = () => {
             <h3 className='text-xl'>Entertain yourself with a round of Chess.</h3>
             <h3 className='text-xl'>Check out and become a part of our forum.</h3>
             <h3>Second Commit</h3>
+            <h3>Button</h3>
             
         </div>     
     </div>
