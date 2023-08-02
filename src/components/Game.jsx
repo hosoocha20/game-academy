@@ -1,22 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { HiOutlineTrash } from "react-icons/hi";
 import secureLocalStorage from "react-secure-storage";
 
 const Game = ({ signedOn }) => {
   const [chessStartButtonText, setChessStartButtonText] = useState("Play Game");
   const [isInChessGame, setIsInChessGame] = useState(false);
+  const [isQuitGame, setIsQuitGame] = useState(false);
   const [playerOne, setPlayerOne] = useState("");
   const [playerTwo, setPlayerTwo] = useState("");
   const [opponentPlayer, setOpponentPlayer] = useState("");
   const [isMyturn, setIsMyTurn] = useState(false);
   const [myGameID, setMyGameID] = useState("");
   const [whosTurn, setWhosTurn] = useState("");
-
+  const [myMove, setMyMove] = useState('');
   const [listOfMyMoves, setListOfMyMoves] = useState([]);
   const [listOfTheirMoves, setListOfTheirMoves] = useState();
+  const [fromMove, setFromMove] = useState('');
+  const [a, setA] = useState('a')
+  const [b, setB] = useState('b');
 
+  const addMyMove = (m) =>{
+    setListOfMyMoves(prev => [...prev, m]);
+  }
   const myDragStart = (e) => {
     e.dataTransfer.setData("text/plain", e.target.id);
+    setFromMove(`${e.target.parentNode.id}`);
   };
   const myDragOver = (e) => {
     e.preventDefault();
@@ -26,8 +34,14 @@ const Game = ({ signedOn }) => {
       const data = e.dataTransfer.getData("text/plain");
       alert(`dropped data: ${e.target.id}`);
       e.target.appendChild(document.getElementById(data));
+
       let myMoveCommand = `document.getElementById(${e.target.id}).appendChild(document.getElementById(${data}))`;
-      setListOfMyMoves(s => [...s, myMoveCommand]);
+      addMyMove({
+        from: `${fromMove}`,
+        to: `${e.target.id}`,
+        piece: `${data}`
+      })
+
     }
   };
   const myDropDelete = (e) => {
@@ -56,6 +70,7 @@ const Game = ({ signedOn }) => {
           let opponent = objectData.player1;
           let opponentMove = objectData.lastMovePlayer1;
           setMyGameID(objectData.gameId);
+          secureLocalStorage.setItem("gameID", objectData.gameId);
           console.log(objectData.gameId);
           if (objectData.player1 == username) {
             setPlayerOne(username);
@@ -88,43 +103,84 @@ const Game = ({ signedOn }) => {
   };
 
   const getTheirMove = (e) =>{
-
+    
     if (myGameID){
       const username = secureLocalStorage.getItem("uname");
-      fetch(`https://cws.auckland.ac.nz/gas/api/TheirMove?gameId=${myGameID}`, {
+
+          fetch(`https://cws.auckland.ac.nz/gas/api/TheirMove?gameId=${myGameID}`, {
+            headers: {
+              Authorization:
+                "Basic " + btoa(`${username}:${secureLocalStorage.getItem("pw")}`),
+              Accept: "text/plain",
+            },
+          })
+            .then((data) => {
+              return data.text();
+            })
+            .then((objectData) => {
+              if(objectData){
+                setIsMyTurn(true);
+                const theirMoveArrayString = JSON.parse(objectData);
+                console.log(typeof theirMoveArrayString);
+                theirMoveArrayString.map(m =>{
+                  document.getElementById(m.to).appendChild(document.getElementById(m.piece));
+                })
+                setListOfTheirMoves(theirMoveArrayString);
+              }
+              console.log(objectData)
+              
+
+
+              
+              
+
+          }).catch(function (err){
+         console.log(err)
+          })
+    }
+  }
+// const theirMoveInterval = (e) =>{
+//   let intervalID = setInterval(() => {getTheirMove()}, 10000);
+//     if (isMyturn) {
+//       clearInterval(intervalID); // Stop the interval if the condition holds true
+//     }
+// }
+
+  
+
+  const postMyMove = (e) =>{
+    const arr = JSON.stringify(listOfMyMoves)
+    if(signedOn && myGameID){
+      fetch("https://cws.auckland.ac.nz/gas/api/MyMove", {
+        method: "POST",
+        body: JSON.stringify({
+          gameId: myGameID,
+          move: arr,
+        }),
         headers: {
           Authorization:
-            "Basic " + btoa(`${username}:${secureLocalStorage.getItem("pw")}`),
+          "Basic " + btoa(`${secureLocalStorage.getItem("uname")}:${secureLocalStorage.getItem("pw")}`),
+          "Content-Type": "application/json",
           Accept: "text/plain",
         },
       })
-        .then((data) => {
-          return data.text();
+        .then(function (response) {
+          return response.text();
         })
-        .then((objectData) => {
-          const theirMoveArrayString = JSON.stringify(objectData);
-          const a = theirMoveArrayString.replace(/'/g, '"');
-          const b = JSON.parse(a)
-          console.log(b);
-          setListOfTheirMoves(a);
-          // for (const m of parsedArray){
-          //   m.replace(/"/g, "");
-          // }
-          // listOfTheirMoves.map(move => {
-          //   move.replace(/"/g, "");
-          // })
-          // parsedArray.map(JSON.parse);
-          
-          
-          
+        .then(function (data) {
+          //console.log(data);
+            setIsMyTurn(false);
 
-      })
+          alert(data);
+        });
+
     }
   }
 
 const quitGame = (e) => {
-  if (signedOn && myGameID){
-      fetch(`https://cws.auckland.ac.nz/gas/api/QuitGame?gameId=${myGameID}`,{
+  
+  if (signedOn && secureLocalStorage.getItem('gameID')){
+      fetch(`https://cws.auckland.ac.nz/gas/api/QuitGame?gameId=${secureLocalStorage.getItem('gameID')}`,{
           headers: {
               'Authorization': 'Basic ' + btoa(`${secureLocalStorage.getItem("uname")}:${secureLocalStorage.getItem("pw")}`),
               'Accept': 'text/plain'
@@ -133,8 +189,12 @@ const quitGame = (e) => {
       .then((data)=>{
         return data.text();   
       }).then((textData)=>{
-          var gameoutput = document.getElementById('gameStartData');      
-          gameoutput.innerHTML = textData;
+        setIsInChessGame(false);
+          var gameoutput = document.getElementById('gameStartData');     
+          setIsQuitGame(true); 
+          //gameoutput.innerHTML = textData;
+          //gameoutput.innerHTML = '<p>Game Over</p>'
+          secureLocalStorage.removeItem("gameID");
 
       })
   }
@@ -142,6 +202,26 @@ const quitGame = (e) => {
     alert("Something went wrong. Please try again");
   }
 }
+
+
+
+//   useEffect(() => {
+//     return () => {
+//         // Anything in here is fired on component unmount.
+//           //quitGame();
+//           console.log('quit')
+
+//     };
+// }, [])
+
+useEffect(() => {
+  const unloadCallback = (event) => { console.log('quit')};
+
+  window.addEventListener("beforeunload", unloadCallback);
+  return () => window.removeEventListener("beforeunload", unloadCallback);
+}, []);
+
+
 
   return (
     <div className="pt-[78px] w-full h-full">
@@ -156,7 +236,7 @@ const quitGame = (e) => {
               <p>The rules.............</p>
             </div>
             <div className="chessboard-container  grid grid-cols-10 auto-rows-fr border">
-              <div className=" bg-chess-rim border-r-2 border-b-2 border-dashed"></div>
+              <div className=" bg-chess-rim border-r-2 border-b-2 border-dashed" id='fs1'></div>
               <div className=" flex items-center justify-center bg-chess-rim">
                 a
               </div>
@@ -183,10 +263,11 @@ const quitGame = (e) => {
               </div>
               <div
                 className=" flex items-center justify-center text-[2em] bg-chess-rim"
+                id='bin1'
                 onDrop={(e) => myDropDelete(e)}
                 onDragOver={(e) => myDragOver(e)}
               >
-                <HiOutlineTrash />
+                <HiOutlineTrash/>
               </div>
 
               <div className=" flex items-center justify-center bg-chess-rim">
@@ -871,10 +952,11 @@ const quitGame = (e) => {
 
               <div
                 className=" flex items-center justify-center text-[2em] bg-chess-rim"
+                id='bin2'
                 onDrop={(e) => myDropDelete(e)}
                 onDragOver={(e) => myDragOver(e)}
               >
-                <HiOutlineTrash />
+                <HiOutlineTrash/>
               </div>
               <div className="flex items-center justify-center bg-chess-rim">
                 a
@@ -900,7 +982,7 @@ const quitGame = (e) => {
               <div className=" flex items-center justify-center bg-chess-rim">
                 h
               </div>
-              <div className="bg-chess-rim border-l-2 border-t-2 border-dashed"></div>
+              <div className="bg-chess-rim border-l-2 border-t-2 border-dashed" id='fs2'></div>
             </div>
             <div>
               <p id="gameStartData">hi</p>
@@ -908,7 +990,7 @@ const quitGame = (e) => {
             </div>
           </div>
           <div className="chess-button-container w-[70%]">
-            {isInChessGame && !isMyturn && (
+            {(isInChessGame && !isMyturn) && (
               <button
                 className="border border-[#1F75FE] rounded px-[0.5em] py-[0.25em] bg-[#77a8ff]"
                 id="getMoveBtn"
@@ -917,10 +999,11 @@ const quitGame = (e) => {
                 Get Opponents Move
               </button>
             )}
-            {isMyturn && (
+            {(isInChessGame && isMyturn) && (
               <button
                 className="border border-valid-green-dark rounded px-[0.5em] py-[0.25em] bg-valid-green-light"
                 id="sendMoveBtn"
+                onClick={postMyMove}
               >
                 Send my Move
               </button>
