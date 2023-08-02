@@ -102,10 +102,11 @@ const Game = ({ signedOn }) => {
           return data.text();
         })
         .then((objectData) => {
-          const theirMoveArrayString = objectData;
-          const parsedArray = theirMoveArrayString.split("'").join('');;
-          console.log(typeof parsedArray)
-          setListOfTheirMoves(parsedArray);
+          const theirMoveArrayString = JSON.stringify(objectData);
+          const a = theirMoveArrayString.replace(/'/g, '"');
+          const b = JSON.parse(a)
+          console.log(b);
+          setListOfTheirMoves(a);
           // for (const m of parsedArray){
           //   m.replace(/"/g, "");
           // }
@@ -120,6 +121,28 @@ const Game = ({ signedOn }) => {
       })
     }
   }
+
+const quitGame = (e) => {
+  if (signedOn && myGameID){
+      fetch(`https://cws.auckland.ac.nz/gas/api/QuitGame?gameId=${myGameID}`,{
+          headers: {
+              'Authorization': 'Basic ' + btoa(`${secureLocalStorage.getItem("uname")}:${secureLocalStorage.getItem("pw")}`),
+              'Accept': 'text/plain'
+          }
+      })
+      .then((data)=>{
+        return data.text();   
+      }).then((textData)=>{
+          var gameoutput = document.getElementById('gameStartData');      
+          gameoutput.innerHTML = textData;
+
+      })
+  }
+  else{
+    alert("Something went wrong. Please try again");
+  }
+}
+
   return (
     <div className="pt-[78px] w-full h-full">
       <h2>Games</h2>
@@ -916,7 +939,7 @@ const Game = ({ signedOn }) => {
               <button
                 className="border border-error-red-dark rounded px-[0.5em] py-[0.25em] bg-error-red-light text-error-red-dark"
                 id="quitBtn"
-                value=""
+                onClick={quitGame}
               >
                 Quit Game
               </button>
