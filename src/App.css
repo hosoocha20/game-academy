@@ -169,3 +169,47 @@
   margin: -2px;
   background-color: #6699cc;
 }
+
+/*Game.jsx CSS*/
+.chessOnlineImg{
+
+  transition: all ease-in-out 200ms; 
+  /* background-position: 100% 0; */
+  /* background-repeat: no-repeat; */
+  background-image: url('./imgs/rookBlack.png');
+  object-fit: fill; 
+  background-position: -10% 100%;
+  background-size: contain;
+  /* background-size: 45% 50%; */
+  background-color: #ebecf0;
+  background-repeat: no-repeat;
+}
+.chessOnlineImg:hover {
+  background-image: url('./imgs/rookWhite.png');
+  background-position: 110% 0;
+  transform:scale(1.2);
+}
+
+.chessLocalImg{
+  transition: all ease-in-out 200ms; 
+
+  background-image: url('./imgs/kingBlack.png'),url('./imgs/kingWhite.png');
+  object-fit: fill; 
+  background-position: -20% 100%, 120% 100%;
+  background-size: contain, contain;
+
+  background-color: #ebecf0;
+  background-repeat: no-repeat;
+}
+.chessLocalImg:hover {
+  background-image: url('./imgs/kingWhite.png'), url('./imgs/kingBlack.png');
+  transform:scale(1.2);
+}
+
+.comingSoonImg{
+  transition: all ease-in-out 200ms; 
+  background-color: #ebecf0;
+}
+.comingSoonImg:hover{
+  transform:scale(1.2);
+}

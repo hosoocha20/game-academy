@@ -51,7 +51,7 @@ const Shop = () => {
         fetchProducts();
      },[])
   return (
-    <div className='h-fit pt-[78px]'>
+    <div className='h-fit pt-[4.875rem]'>
         <div className='shop-background bg-black h-[32%] min-h-[200px] pb-[5%] pt-[3%] flex flex-col gap-[50%] items-center'>
             <h1 className='text-my-white text-5xl'>The Game Shop</h1>
             <div className='w-[40%] border py-[0.5%] bg-white rounded-[2rem]'>

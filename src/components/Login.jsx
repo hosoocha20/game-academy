@@ -13,7 +13,7 @@ const Login = ({handleActiveTabChange, signedOn, setSignedOn}) => {
 
     
   return (
-    <div className={` pt-[78px] h-full w-full relative overflow-hidden`}>
+    <div className={` pt-[4.875rem] h-full w-full relative overflow-hidden`}>
       <div id='signIn'
         className={`absolute top-0 left-0 h-full w-full md:w-[60%] flex justify-center items-center md:transition-all md:duration-700 md:ease-in-out z-20 ${
           isAnimated ? "translate-x-full opacity-0" : ""

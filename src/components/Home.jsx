@@ -2,7 +2,7 @@ import React from 'react'
 
 const Home = () => {
   return (
-    <div className='home-background px-[7%] pt-[78px]'>
+    <div className='home-background px-[7%] pt-[4.875rem]'>
         <div className='text-white px-[17%] pt-[10%]'>
             <h1 className='text-6xl'>Welcome</h1>
             <h1 className='text-6xl'>to the <span className="text-my-yellow">Game Academy</span></h1>

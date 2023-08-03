@@ -23,7 +23,7 @@ const NavBar = ({ handleActiveTabChange, signedOn, setSignedOn }) => {
   }
 
   return (
-    <div className="Navbar flex justify-between md:flex-row  w-full h-[78px] py-3 px-[10%] bg-black text-my-white z-[999] fixed top-0">
+    <div className="Navbar flex justify-between md:flex-row  w-full h-[4.875rem] py-3 px-[10%] bg-black text-my-white z-[999] fixed top-0">
       <div className="logo pr-[2.8rem]">
         <a href="" className="w-full h-full flex items-center">
           <img

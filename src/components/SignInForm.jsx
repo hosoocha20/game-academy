@@ -46,7 +46,7 @@ const SignInForm = ({
     });
   };
   return (
-    <div className="h-full w-full flex flex-col gap-[1.8rem] md:gap-[4rem] items-center md:justify-normal justify-evenly pt-[78px]">
+    <div className="h-full w-full flex flex-col gap-[1.8rem] md:gap-[4rem] items-center md:justify-normal justify-evenly pt-[4.875rem]">
       <h1 className="text-[2.4rem] font-semibold text-center pt-[17%] md:px-[5%] px-[10%] ">
         Sign in to the <span className="whitespace-nowrap">Game Academy</span>
       </h1>

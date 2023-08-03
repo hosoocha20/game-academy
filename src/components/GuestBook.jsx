@@ -75,7 +75,7 @@ const GuestBook = () => {
 
   
   return (
-    <div className="pt-[78px] pb-[2%] px-[2%] md:px-[18%] h-full flex flex-col gap-[2%]">
+    <div className="pt-[4.875rem] pb-[2%] px-[2%] md:px-[18%] h-full flex flex-col gap-[2%]">
       <h3 className="mt-[2%] text-[1.5rem] relative">Comments</h3>
       {loading ? (
         <div className="w-full h-[57%]  absolute left-0 top-[20%]">

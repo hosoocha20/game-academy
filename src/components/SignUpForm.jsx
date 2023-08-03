@@ -34,7 +34,7 @@ const SignUpForm = ({ mobileLinkClicked, setMobileLinkClicked }) => {
       });
   };
   return (
-    <div className="w-full h-full flex flex-col items-center pt-[78px] md:gap-[3.5rem] gap-[2rem]">
+    <div className="w-full h-full flex flex-col items-center pt-[4.875rem] md:gap-[3.5rem] gap-[2rem]">
       <h1 className="text-[2.4rem] font-semibold pt-[17%] md:px-0 px-[8%]">
         Create Account
       </h1>
