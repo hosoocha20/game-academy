@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef} from "react";
 import { HiOutlineTrash } from "react-icons/hi";
 import {  SlRefresh } from "react-icons/sl";
+import { CgClose } from "react-icons/cg";
 import secureLocalStorage from "react-secure-storage";
 
 const ChessGameServer = ({ signedOn }) => {
-  const [chessStartButtonText, setChessStartButtonText] = useState("Play Game");
   const [isInChessGame, setIsInChessGame] = useState(false);
   const [isQuitGame, setIsQuitGame] = useState(false);
-  const [playerOne, setPlayerOne] = useState("");
-  const [playerTwo, setPlayerTwo] = useState("");
   const [myColor, setMyColor] = useState('');
   const [opponentPlayer, setOpponentPlayer] = useState("");
   const [isMyturn, setIsMyTurn] = useState(false);
@@ -20,6 +18,13 @@ const ChessGameServer = ({ signedOn }) => {
   const [fromMove, setFromMove] = useState("");
   const [a, setA] = useState("a");
   const [b, setB] = useState("b");
+
+  const countRef = React.useRef();
+
+  //for Pairing
+  const [intervalID, setIntervalID] = useState(null);
+  const [isPaired, setIsNotPaired] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
 
   const addMyMove = (m) => {
     setListOfMyMoves((prev) => [...prev, m]);
@@ -52,6 +57,8 @@ const ChessGameServer = ({ signedOn }) => {
     }
   };
 
+
+
   const startGame = (e) => {
     if (signedOn) {
       const username = secureLocalStorage.getItem("uname");
@@ -74,7 +81,6 @@ const ChessGameServer = ({ signedOn }) => {
           secureLocalStorage.setItem("gameID", objectData.gameId);
           console.log(objectData.gameId);
           if (objectData.player1 == username) {
-            setPlayerOne(username);
             setMyColor("White")
             setIsMyTurn(true);
             setWhosTurn("It is your turn");
@@ -82,23 +88,23 @@ const ChessGameServer = ({ signedOn }) => {
             opponent = objectData.player2;
             opponentMove = objectData.lastMovePlayer2;
           } else {
-            setPlayerTwo(username);
             setMyColor("Black")
             setWhosTurn("It is your Opponent's turn");
             setOpponentPlayer(objectData.player1);
           }
-          if (objectData.state == "progress") {
+          if (objectData.state !== "progress") {
+            setOpenModal(true);
+            // textOutput = `<p>There are currently no active opponents.</p> <p>Please try again later</p>
+            //   <p><i>Note: Please do not spam the Pair Me button </i><p>`;           
+          } else {
             setIsInChessGame(true);
-
+            clearInterval(countRef.current);
+            setOpenModal(false);
             textOutput = `<p>You have been matched user <b>${opponent}</b></p>
                         <p>Your pieces are <b>${myColor}</b></p>
                         <p>Good Luck!</p>`;
             // document.getElementById('quitBtn').value=`${objectData.gameId}`;
-          } else {
-            setChessStartButtonText("Pair me");
-            // textOutput = `<p>There are currently no active opponents.</p> <p>Please try again later</p>
-            //   <p><i>Note: Please do not spam the Pair Me button </i><p>`;
-            textOutput = `<p>Searching for an opponent...</p>`;
+
           }
           gameOutput.innerHTML = textOutput;
         });
@@ -106,6 +112,18 @@ const ChessGameServer = ({ signedOn }) => {
       alert("Please log in to play with an opponent online");
     }
   };
+
+  const paringOnClick = (e) =>{
+    if (intervalID === null){
+      countRef.current = setInterval(startGame, 5000);
+      setTimeout(() => {
+        setOpenModal(false);
+        setIsNotPaired(true);
+      }, 35000);
+      setTimeout(function( ) { clearInterval( countRef.current ); }, 30000);
+
+    }
+  }
 
   const getTheirMove = (e) => {
     if (myGameID) {
@@ -205,6 +223,7 @@ const ChessGameServer = ({ signedOn }) => {
         })
         .then((textData) => {
           setIsInChessGame(false);
+          setIsNotPaired(null);
           let gameOutput = document.getElementById("gameStartData");
           gameOutput.innerHTML = '';
           setIsQuitGame(true);
@@ -236,11 +255,28 @@ const ChessGameServer = ({ signedOn }) => {
   }, []);
 
   return (
-    <div className="flex  w-full h-full pt-[1rem]">
+    <div className="relative flex gap-[3rem] w-full h-full pt-[1rem]">
+      {(openModal) && (
+        <div className="myModal w-full h-full absolute  flex justify-center items-center bg-black/70">
+        <div className="relative modalContent  w-[40%] h-[40%]  bg-[#fefefe] flex flex-col items-center justify-center rounded">
+          <button className="absolute top-[1.5rem] right-[2rem]  text-[1.5rem]" onClick={(e)=>setOpenModal(false)}>
+            <CgClose/>
+          </button>
+          
+          <p>Searching for Opponent...</p>
+          <div className="three-body">
+            <div className="three-body__dot"></div>
+            <div className="three-body__dot"></div>
+            <div className="three-body__dot"></div>
+          </div>
+        </div>
+      </div>
+    )}
+
       <div className="chessboard w-full h-full flex flex-col items-center">
-        <div className="chessboard-container w-full grid grid-cols-10 auto-rows-fr border">
+        <div className="chessboard-container  w-full grid grid-cols-10 auto-rows-fr border rounded-[0.5rem]">
           <div
-            className=" bg-chess-rim border-r-2 border-b-2 border-dashed"
+            className=" bg-chess-rim border-r-2 border-b-2 border-dashed rounded-tl-lg"
             id="fs1"
           ></div>
           <div className=" flex items-center justify-center bg-chess-rim">
@@ -266,7 +302,7 @@ const ChessGameServer = ({ signedOn }) => {
             h
           </div>
           <div
-            className=" flex items-center justify-center text-[2em] bg-chess-rim"
+            className=" flex items-center justify-center text-[2em] bg-chess-rim rounded-tr-lg"
             id="bin1"
             onDrop={(e) => myDropDelete(e)}
             onDragOver={(e) => myDragOver(e)}
@@ -955,7 +991,7 @@ const ChessGameServer = ({ signedOn }) => {
           ></div>
 
           <div
-            className=" flex items-center justify-center text-[2em] bg-chess-rim"
+            className=" flex items-center justify-center text-[2em] bg-chess-rim rounded-bl-lg"
             id="bin2"
             onDrop={(e) => myDropDelete(e)}
             onDragOver={(e) => myDragOver(e)}
@@ -985,12 +1021,12 @@ const ChessGameServer = ({ signedOn }) => {
             h
           </div>
           <div
-            className="bg-chess-rim border-l-2 border-t-2 border-dashed"
+            className="bg-chess-rim border-l-2 border-t-2 border-dashed rounded-br-lg"
             id="fs2"
           ></div>
         </div>
       </div>
-      <div className="chess-button-container w-[75%]  pl-[2.5%]">
+      <div className="chess-button-container w-[75%]  px-[2.5%] pt-[2.5%] border rounded-[0.5rem] bg-[#EBECF0]">
         <div className="flex justify-between">
             {isInChessGame && !isMyturn && (
             <button
@@ -1021,9 +1057,9 @@ const ChessGameServer = ({ signedOn }) => {
             <button
                 className="border rounded px-[0.5em] py-[0.25em] text-white bg-my-black"
                 id="startBtn"
-                onClick={(e) => startGame(e)}
+                onClick={(e) => paringOnClick(e)}
             >
-                {chessStartButtonText}
+                Play Game
             </button>
             )}
             {isInChessGame && (
@@ -1037,6 +1073,13 @@ const ChessGameServer = ({ signedOn }) => {
             </button>
             )}
         </div>
+        {(isPaired) && (
+          <div className="border border-error-red-dark bg-error-red-light rounded px-[1rem] py-[1rem]">
+          <p>There are currently no active opponents</p>
+          <p>Please try again or come back later</p>
+        </div>
+        )}
+
         <div className='flex flex-col gap-y-[1.5rem] mt-[2rem]'>
           <p id="gameStartData"></p>
           {(whosTurn && isInChessGame) && <p className="text-center text-[1.25rem] font-bold text-valid-green-dark">{whosTurn}</p>}

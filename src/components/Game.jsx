@@ -23,14 +23,14 @@ const Game = ({ signedOn }) => {
         <div className='mt-[2.5rem] flex flex-col gap-[1em]'>
           <h2 className="text-[2em] text-center">Games</h2>
           <p className="text-center">Play some of the best classic games!</p>
-          <div className="game-buttons flex justify-center gap-x-[5%] mt-[1.5em]">
-            <button className=' border rounded-[1rem] w-[25%] py-[4em] text-center chessOnlineImg' onClick={(e)=>openGame('chessGameServer', 'Chess Online')}>
+          <div className="game-buttons game-grid mt-[1.5em] w-full">
+            <button className=' border rounded-[1rem] w-full   py-[4em] text-center chessOnlineImg' onClick={(e)=>openGame('chessGameServer', 'Chess Online')}>
               Chess Online
             </button>
-            <button className='border rounded-[1rem] w-[25%] py-[4em] text-center chessLocalImg'>
+            <button className='border rounded-[1rem] w-full   py-[4em] text-center chessLocalImg'>
               Chess Two Player
             </button>
-            <button className="border rounded-[1rem] w-[25%] py-[4em] text-center comingSoonImg">
+            <button className="border rounded-[1rem] w-full  py-[4em] text-center comingSoonImg">
               Coming more soon...
             </button>
           </div>
