@@ -3,16 +3,74 @@
   font-family: 'Poppins', sans-serif;
 }
 
-
+/*Home.jsx CSS*/
 .home-background{
-  background-image: url('./imgs/chess-home2.jpg');
+  background-image: url('./imgs/brick-v3.jpg');
+  background-size: cover;
   
   background-position: center;
   background-repeat: no-repeat;
   /* height: calc(100vh - 78px); */
   height: 100%;
 }
+.neonTextWelcome {
+  color: #fff;
+  text-shadow:
+      0 0 7px #fff,
+      0 0 10px #fff,
+      0 0 21px #fff,
+      0 0 42px #f40,
+      0 0 82px #f40,
+      0 0 92px #f40,
+      0 0 102px #f40,
+      0 0 151px #f40;
+      font-family: 'Exo 2', sans-serif;
+}
+.neonWelcomeBorder{
+  border: 0.2rem solid #fff;
+  box-shadow:
+  0 0 .2rem #fff,
+  inset 0 0 .2rem #fff,
+  0 0 1.7rem #08f,
+  inset 0 0 1rem #08f,
+  0 0 1.7rem #08f,
+  inset 0 0 1.7rem #08f;  
+}
+.neonText {
+  color: #fff;
+  text-shadow:
+      0 0 7px #fff,
+      0 0 10px #fff,
+      0 0 21px #fff,
+      0 0 42px #08f,
+      0 0 82px #08f,
+      0 0 92px #08f,
+      0 0 102px #08f,
+      0 0 151px #08f;
+  animation: flicker 1.5s infinite alternate;
+}
+@keyframes flicker {
+    
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
 
+      text-shadow:
+      0 0 4px #fff,
+      0 0 11px #fff,
+      0 0 19px #fff,
+      0 0 40px #08f,
+      0 0 80px #08f,
+      0 0 90px #08f,
+      0 0 100px #08f,
+      0 0 150px #08f;
+  
+  }
+  
+  20%, 24%, 55% {        
+      text-shadow: none;
+  }    
+}
+
+/*NavBar.jsx CSS*/
 .nav-slideIn{
   animation: slideIn 500ms;
   color: white;
@@ -39,6 +97,132 @@
   }
 }
 
+
+/*Shop.jsx CSS*/
+.shop-background{
+  background-image: url('./imgs/brick-v3.jpg');
+  background-size: cover;
+  
+  background-position: center;
+  background-repeat: no-repeat;
+  /* height: calc(100vh - 78px); */
+
+}
+.gameShopBorder{
+  border: 0.2rem solid #fff;
+  box-shadow:
+  0 0 .2rem #fff,
+  inset 0 0 .2rem #fff,
+  0 0 1.3rem #d402d6,
+  inset 0 0 1rem #d402d6,
+  0 0 1.3rem #d402d6,
+  inset 0 0 1.7rem #d402d6;   
+  animation: pulsateGameBorder 0.11s ease-in-out infinite alternate;
+}
+
+@keyframes pulsateGameBorder {
+    
+   100% {
+
+    box-shadow:
+    0 0 .2rem #fff,
+    inset 0 0 .2rem #fff,
+    0 0 1.2rem #d402d6,
+    inset 0 0 1rem #d402d6,
+    0 0 1.2rem #d402d6,
+    inset 0 0 1.6rem #d402d6;  
+  
+  }
+  
+  0%{        
+    box-shadow:
+    0 0 .1rem #fff,
+    inset 0 0 .1rem #fff,
+    0 0 1.2rem #d402d6,
+    inset 0 0 1rem #d402d6,
+    0 0 1.2rem #d402d6,
+    inset 0 0 1.5rem #d402d6; 
+  }    
+}
+
+.neonGame{
+  color: #fff;
+  text-shadow:
+      0 0 7px #fff,
+      0 0 8px #fff,
+      0 0 10px #d7035a,
+      0 0 15px #d7035a,
+      0 0 21px #d7035a,
+      0 0 35px #d7035a,
+      0 0 40px #d7035a,
+      0 0 50px #d7035a;
+  font-family: 'Tilt Neon', cursive;
+  animation: pulsateGame 0.11s ease-in-out infinite alternate;
+}
+.neonShop{
+  color: #fff;
+  text-shadow:
+      0 0 7px #fff,
+      0 0 10px #fff,
+      0 0 15px #0105df,
+      0 0 21px #0105df,
+      0 0 35px #0105df,
+      0 0 40px #0105df,
+      0 0 50px #0105df;
+  font-family: 'Tilt Neon', cursive;
+  animation: pulsateShop 0.11s ease-in-out infinite alternate;
+}
+
+@keyframes pulsateShop {
+  100% {
+    /* Larger blur radius */
+    text-shadow:
+      0 0 4px #fff,
+      0 0 11px #fff,
+      0 0 19px #fff,
+      0 0 30px #0105df,
+      0 0 40px #0105df,
+      0 0 50px #0105df,
+      0 0 60px #0105df;
+  }
+ 0% {
+    /* A slightly smaller blur radius */
+    text-shadow:
+      0 0 4px #fff,
+      0 0 10px #fff,
+      0 0 18px #fff,
+      0 0 24px #0105df,
+      0 0 30px #0105df,
+      0 0 40px #0105df,
+      0 0 50px #0105df;
+  }
+}
+@keyframes pulsateGame {
+  100% {
+    /* Larger blur radius */
+    text-shadow:
+      0 0 4px #fff,
+      0 0 11px #fff,
+      0 0 19px #fff,
+      0 0 30px #d7035a,
+      0 0 40px #d7035a,
+      0 0 50px #d7035a,
+      0 0 60px #d7035a;
+  }
+ 0% {
+    /* A slightly smaller blur radius */
+    text-shadow:
+      0 0 4px #fff,
+      0 0 10px #fff,
+      0 0 18px #fff,
+      0 0 24px #d7035a,
+      0 0 30px #d7035a,
+      0 0 40px #d7035a,
+      0 0 50px #d7035a;
+  }
+}
+
+/*GuestBook.jsx CSS*/
 .bubble {
 	position: relative;
 	width: 300px;
@@ -133,6 +317,8 @@
   }
 }
 
+
+/*SignIn/SignUp css*/
 .invalidForm{
   animation: shake 0.2s ease-in-out 0s 2;
 }
@@ -154,20 +340,13 @@
   font-size: 0.88rem;
 } */
 
-.box-white{
-  width: 10%;
-  height: 10%;
-  border: 1px solid grey;
-  display: inline-block;
-  margin: -2px;
+/*Chess CSS*/
+.box-from{
+  background-color: grey;
 }
-.box-black{
-  width: 10%;
-  height: 10%;
-  border: 1px solid grey;
-  display: inline-block;
-  margin: -2px;
-  background-color: #6699cc;
+.box-to{
+
+  background-color: #4fa64f;
 }
 
 /*Game.jsx CSS*/
@@ -178,8 +357,8 @@
  
   column-gap: 4.5rem;
   row-gap: 1rem;
-
 }
+
 
 .chessOnlineImg{
 
@@ -205,7 +384,7 @@
 
   background-image: url('./imgs/kingBlack.png'),url('./imgs/kingWhite.png');
   object-fit: fill; 
-  background-position: -20% 100%, 120% 100%;
+  background-position: -10% 100%, 110% 100%;
   background-size: contain, contain;
 
   background-color: #ebecf0;
@@ -226,11 +405,18 @@
 
 /*ChessGameServer.jsx CSS*/
 .chessOnline-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(400px, 1fr));
- 
-  column-gap: 2.5rem;
-  row-gap: 1rem;
+  /* display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(400px, 1fr)); */
+  display: flex;
+  flex-wrap: wrap-reverse;
+}
+.chessboard{
+  flex-grow: 2;
+  min-width: 500px;
+}
+.chessboard-side{
+  min-width: 300px;
+  flex-grow: 1;
 }
 
 .three-body {

@@ -15,10 +15,10 @@ const Game = ({ signedOn }) => {
   const backToGame = (e) =>{
     setIsGameOpened(false);
   }
-  const marginBottomStyle = '';
+
 
   return (
-    <div className="pt-[4.875rem] px-[10%] w-full h-full overflow-x-hidden">
+    <div className="pt-[4.875rem] md:px-[10%] px-[5%] pb-[3rem] w-full h-full ">
       {(!isGameOpened) &&(
         <div className='mt-[2.5rem] flex flex-col gap-[1em]'>
           <h2 className="text-[2em] text-center">Games</h2>
@@ -29,9 +29,10 @@ const Game = ({ signedOn }) => {
             </button>
             <button className='border rounded-[1rem] w-full   py-[4em] text-center chessLocalImg'>
               Chess Two Player
+              <p className="text-[0.7rem] italic text-gray-600">Coming soon...</p>
             </button>
             <button className="border rounded-[1rem] w-full  py-[4em] text-center comingSoonImg">
-              Coming more soon...
+              More coming soon...
             </button>
           </div>
         </div>
@@ -43,7 +44,7 @@ const Game = ({ signedOn }) => {
               Back to Games
             </button>
             <h4 className='text-[1.5rem]'>{gameName}</h4>
-            <div className='invisible text-my-white rounded px-[1em] py-[0.5em]'>Back to Games</div>
+            <div className='invisible text-my-white rounded md:px-[1em] md:py-[0.5em] px-[0.2rem] py-0  w-0'>Back to Games</div>
           </div>
 
           {(gameOpened === 'chessGameServer') && (

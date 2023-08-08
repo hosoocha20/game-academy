@@ -121,7 +121,7 @@ const GuestBook = () => {
             value={comment}
             onChange={(e) => setComment(e.target.value)}
           ></textarea>
-          <button type="submit" className="border rounded bg-[#bbbbbb]" onInput={handleCommentSubmit}>
+          <button type="submit" className="border rounded bg-[#bbbbbb] py-[1%]" onInput={handleCommentSubmit}>
             Post Comment
           </button>
         </form>
