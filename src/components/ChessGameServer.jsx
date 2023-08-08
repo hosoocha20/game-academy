@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { HiOutlineTrash } from "react-icons/hi";
 import { SlRefresh } from "react-icons/sl";
 import { CgClose } from "react-icons/cg";
@@ -6,7 +6,7 @@ import secureLocalStorage from "react-secure-storage";
 
 const ChessGameServer = ({ signedOn }) => {
   const [isInChessGame, setIsInChessGame] = useState(false);
-  const [openHowToPlay,setOpenHowToPlay] = useState(false);
+  const [openHowToPlay, setOpenHowToPlay] = useState(false);
   const [startGameLabel, setStartGameLabel] = useState("Play Game");
   const [opponentQuit, setOpponentQuit] = useState(false);
   const [isQuitGame, setIsQuitGame] = useState(false);
@@ -15,7 +15,6 @@ const ChessGameServer = ({ signedOn }) => {
   const [isMyturn, setIsMyTurn] = useState(false);
   const [myGameID, setMyGameID] = useState("");
   const [whosTurn, setWhosTurn] = useState("");
-  const [myMove, setMyMove] = useState("");
   const [listOfMyMoves, setListOfMyMoves] = useState([]);
   const [listOfTheirMoves, setListOfTheirMoves] = useState("");
   const resetBoard = [
@@ -78,14 +77,13 @@ const ChessGameServer = ({ signedOn }) => {
       const data = e.dataTransfer.getData("text/plain");
       try {
         e.target.appendChild(document.getElementById(data));
-        if (binID){
+        if (binID) {
           addMyMove({
             from: `${fromMove}`,
             to: `${binID}`,
             piece: `${data}`,
-          });         
-        }
-        else{
+          });
+        } else {
           addMyMove({
             from: `${fromMove}`,
             to: `${e.target.id}`,
@@ -97,7 +95,7 @@ const ChessGameServer = ({ signedOn }) => {
       }
     }
   };
-  const myDropDelete = (e,id) => {
+  const myDropDelete = (e, id) => {
     if (e.dataTransfer) {
       const data = e.dataTransfer.getData("text/plain");
       addMyMove({
@@ -213,9 +211,9 @@ const ChessGameServer = ({ signedOn }) => {
   };
 
   const paringOnClick = (e) => {
-    if (!signedOn){
+    if (!signedOn) {
       alert("Please log in to play with an opponent online");
-      return
+      return;
     }
     setStartGameLabel("Loading...");
     setIsNotPaired(null);
@@ -331,22 +329,22 @@ const ChessGameServer = ({ signedOn }) => {
     setStartGameLabel("Play Game");
   };
 
-  const showRecentMove = (e) =>{
-    if(listOfTheirMoves.length){
-      listOfTheirMoves.map((m)=>{
+  const showRecentMove = (e) => {
+    if (listOfTheirMoves.length) {
+      listOfTheirMoves.map((m) => {
         document.getElementById(m.from).classList.add("box-from");
         document.getElementById(m.to).classList.add("box-to");
-      })
+      });
     }
-  }
-  const unShowRecentMove = (e) =>{
-    if(listOfTheirMoves.length){
-      listOfTheirMoves.map((m)=>{
+  };
+  const unShowRecentMove = (e) => {
+    if (listOfTheirMoves.length) {
+      listOfTheirMoves.map((m) => {
         document.getElementById(m.from).classList.remove("box-from");
         document.getElementById(m.to).classList.remove("box-to");
-      })
+      });
     }
-  }
+  };
 
   useEffect(() => {
     const unloadCallback = (event) => {
@@ -380,32 +378,48 @@ const ChessGameServer = ({ signedOn }) => {
       )}
       {openHowToPlay && (
         <div className="absolute bg-black/70 w-full h-full flex justify-center items-center">
-        <div className="relative bg-[#fefefe] rounded md:w-[60%] w-[80%] flex flex-col gap-[1rem]  rounded py-[1.5rem] px-[2.5rem]">
-          <button
+          <div className="relative bg-[#fefefe] rounded md:w-[60%] w-[80%] flex flex-col gap-[1rem]  rounded py-[1.5rem] px-[2.5rem]">
+            <button
               className="absolute top-[1rem] right-[2rem]  text-[1.5rem]"
-              onClick={(e)=>setOpenHowToPlay(false)}
+              onClick={(e) => setOpenHowToPlay(false)}
             >
               <CgClose />
             </button>
-          <p>How to play:</p>
-          <ul className="list-disc list-inside">
-            <li>The rules follow the chess rules</li>
-            <li>However, this chess game has no limitations nor restrictions on your play</li>
-          </ul>
-          <ul className="list-disc list-inside">
-            <li>To send your move to the opponent, click on the Send Move button</li>
-            <li>To reset your moves, click on the Reset Move button</li>
-            <li>Once the opponent has made a move, it will automatically be reflected in your game</li>
-            <li>To see your opponent's recent move, hover over the Previous Move button</li>
-          </ul>
-          <ul className="list-disc list-inside">
-            <li>To capture an opponent, first drag the opponent's piece to the bin and then drag your piece onto the opponent's grid</li>
-            <li>The two dashed grid at the edges of the grid are there for any castling moves</li>
-          </ul>
+            <p>How to play:</p>
+            <ul className="list-disc list-inside">
+              <li>The rules follow the chess rules</li>
+              <li>
+                However, this chess game has no limitations nor restrictions on
+                your play
+              </li>
+            </ul>
+            <ul className="list-disc list-inside">
+              <li>
+                To send your move to the opponent, click on the Send Move button
+              </li>
+              <li>To reset your moves, click on the Reset Move button</li>
+              <li>
+                Once the opponent has made a move, it will automatically be
+                reflected in your game
+              </li>
+              <li>
+                To see your opponent's recent move, hover over the Previous Move
+                button
+              </li>
+            </ul>
+            <ul className="list-disc list-inside">
+              <li>
+                To capture an opponent, first drag the opponent's piece to the
+                bin and then drag your piece onto the opponent's grid
+              </li>
+              <li>
+                The two dashed grid at the edges of the grid are there for any
+                castling moves
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
       )}
-
 
       <div className="chessboard  h-full flex flex-col items-center">
         <div
@@ -416,7 +430,7 @@ const ChessGameServer = ({ signedOn }) => {
         >
           <div
             className=" bg-chess-rim border-r-2 border-b-2 border-dashed rounded-tl-lg"
-            id="fs1"             
+            id="fs1"
             onDrop={(e) => myDrop(e)}
             onDragOver={(e) => myDragOver(e)}
           ></div>
@@ -442,12 +456,12 @@ const ChessGameServer = ({ signedOn }) => {
           <div className=" flex items-center justify-center bg-chess-rim">
             h
           </div>
-          <div
-            className=" flex items-center justify-center text-[2em] bg-chess-rim rounded-tr-lg"
-          >
-            <HiOutlineTrash             id="bin1"
-            onDrop={(e) => myDrop(e, "bin1")}
-            onDragOver={(e) => myDragOver(e)}/>
+          <div className=" flex items-center justify-center text-[2em] bg-chess-rim rounded-tr-lg">
+            <HiOutlineTrash
+              id="bin1"
+              onDrop={(e) => myDrop(e, "bin1")}
+              onDragOver={(e) => myDragOver(e)}
+            />
           </div>
 
           <div className=" flex items-center justify-center bg-chess-rim">
@@ -1130,13 +1144,12 @@ const ChessGameServer = ({ signedOn }) => {
             onDragOver={(e) => myDragOver(e)}
           ></div>
 
-          <div
-            className=" flex items-center justify-center text-[2em] bg-chess-rim rounded-bl-lg"
-
-          >
-            <HiOutlineTrash             id="bin2"
-            onDrop={(e) => myDrop(e,"bin2")}
-            onDragOver={(e) => myDragOver(e)}/>
+          <div className=" flex items-center justify-center text-[2em] bg-chess-rim rounded-bl-lg">
+            <HiOutlineTrash
+              id="bin2"
+              onDrop={(e) => myDrop(e, "bin2")}
+              onDragOver={(e) => myDragOver(e)}
+            />
           </div>
           <div className="flex items-center justify-center bg-chess-rim">a</div>
           <div className=" flex items-center justify-center bg-chess-rim">
@@ -1215,7 +1228,11 @@ const ChessGameServer = ({ signedOn }) => {
                   aria-label="Reset your Move"
                 />
               </button>
-              <button className="border-[#4169e1] rounded bg-[#4169e1] hover:bg-[#4169e1]/70 px-[0.5em] py-[0.8em]" onMouseOver={showRecentMove} onMouseLeave={unShowRecentMove}>
+              <button
+                className="border-[#4169e1] rounded bg-[#4169e1] hover:bg-[#4169e1]/70 px-[0.5em] py-[0.8em]"
+                onMouseOver={showRecentMove}
+                onMouseLeave={unShowRecentMove}
+              >
                 Previous Move
               </button>
             </div>
@@ -1233,7 +1250,12 @@ const ChessGameServer = ({ signedOn }) => {
           )}
         </div>
         <div>
-          <button className="border bg-my-black rounded px-[1.3em] py-[0.8em] text-white" onClick={(e)=>setOpenHowToPlay(true)}>How to play</button>
+          <button
+            className="border bg-my-black rounded px-[1.3em] py-[0.8em] text-white"
+            onClick={(e) => setOpenHowToPlay(true)}
+          >
+            How to play
+          </button>
         </div>
         <div>
           {isNotPaired && !isInChessGame && (

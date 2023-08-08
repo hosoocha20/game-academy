@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from "react";
-import  secureLocalStorage  from  "react-secure-storage";
+import React, { useEffect, useState } from "react";
+import secureLocalStorage from "react-secure-storage";
 import GALogo from "../svg/logo.svg";
 import { SlMenu } from "react-icons/sl";
 import { TfiClose } from "react-icons/tfi";
+import { FaUser } from "react-icons/fa";
+import { IoIosArrowDown } from "react-icons/io";
+import { MdLogout } from "react-icons/md";
 
 const NavBar = ({ handleActiveTabChange, signedOn, setSignedOn }) => {
   const [toggleMenu, setToggleMenu] = useState(false);
-
+  const [toggleDropdown, setToggleDropdown] = useState(false);
+  const [uname, setUname] = useState(secureLocalStorage.getItem("uname"));
 
   const toggleMenuOnClick = (e) => {
     setToggleMenu(!toggleMenu);
@@ -16,11 +20,16 @@ const NavBar = ({ handleActiveTabChange, signedOn, setSignedOn }) => {
     setToggleMenu(!toggleMenu);
   };
 
-  const logoutOnClick = (e) =>{
+  const logoutOnClick = (e) => {
+    setToggleDropdown(false);
     secureLocalStorage.clear();
     setSignedOn(false);
     window.location.reload(true);
-  }
+  };
+
+  useEffect(() => {
+    setUname(secureLocalStorage.getItem("uname"));
+  }, [signedOn]);
 
   return (
     <div className="Navbar flex justify-between md:flex-row  w-full h-[4.875rem] py-3 px-[10%] bg-black text-my-white z-[999] fixed top-0">
@@ -29,7 +38,7 @@ const NavBar = ({ handleActiveTabChange, signedOn, setSignedOn }) => {
           <img
             alt="Game Academy Logo"
             id="GA-logo"
-            className="w-12 align-baseline"
+            className="w-12 align-baseline min-w-[30px]"
             src={GALogo}
           />
         </a>
@@ -59,7 +68,12 @@ const NavBar = ({ handleActiveTabChange, signedOn, setSignedOn }) => {
             </button>
           </li>
           <li>
-            <button className="tabLink" onClick={() => menuBarTabChange("game")}>Game</button>
+            <button
+              className="tabLink"
+              onClick={() => menuBarTabChange("game")}
+            >
+              Game
+            </button>
           </li>
           <li>
             <button
@@ -71,29 +85,47 @@ const NavBar = ({ handleActiveTabChange, signedOn, setSignedOn }) => {
           </li>
         </ul>
       </div>
-      <div className="flex items-center justify-end gap-[5%] w-full md:w-auto">
+      <div className="flex items-center justify-end gap-[5%] w-full md:w-auto relative">
         <button
-          className={`${signedOn ? "hidden" : "block"} h-full px-[2.8rem] rounded-[1.8rem] border-my-white-600 bg-my-white border text-my-black text-lg md:whitespace-nowrap`}
+          className={`${
+            signedOn ? "hidden" : "block"
+          } h-full px-[2.8rem] rounded-[1.8rem] border-my-white-600 bg-my-white border text-my-black text-lg md:whitespace-nowrap`}
           onClick={() => menuBarTabChange("login")}
         >
           Sign in
         </button>
         <button
-          className={`${signedOn ? "block" : "hidden"} h-full px-[2.8rem] rounded-[1.8rem] border-my-white-600 bg-my-white border text-my-black text-lg md:whitespace-nowrap`}
-          onClick={() => logoutOnClick()}
+          className={`${
+            signedOn ? "block" : "hidden"
+          } h-full md:px-[1.5rem] px-[0.8rem] rounded-[1.8rem] border-my-white-600 bg-my-white border text-my-black text-lg md:whitespace-nowrap flex items-center md:gap-[0.9rem] gap-[0.4rem] `}
+          onClick={(e) => setToggleDropdown(!toggleDropdown)}
         >
-          Logout
+          <FaUser />
+          <p className="md:text-[1rem] text-[0.9rem]">{uname}</p>
+          <IoIosArrowDown />
         </button>
+        {toggleDropdown && (
+          <ul className="absolute border top-[105%] left-0 w-full h-full px-[0.6rem] py-[0.4rem] rounded bg-white text-my-black flex items-center">
+            <li
+              className="flex gap-[1rem] items-center cursor-pointer hover:bg-[#eeeeee] w-full h-full px-[2rem] rounded"
+              onClick={() => logoutOnClick()}
+            >
+              <MdLogout />
+              Logout
+            </li>
+          </ul>
+        )}
+
         {!toggleMenu ? (
           <SlMenu
-            className="md:hidden cursor-pointer"
+            className="md:hidden cursor-pointer min-w-[20px]"
             color="white"
             size={"20px"}
             onClick={toggleMenuOnClick}
           />
         ) : (
           <TfiClose
-            className="md:hidden cursor-pointer"
+            className="md:hidden cursor-pointer min-w-[20px]"
             color="white"
             size={"20px"}
             onClick={toggleMenuOnClick}

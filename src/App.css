@@ -405,8 +405,6 @@
 
 /*ChessGameServer.jsx CSS*/
 .chessOnline-grid{
-  /* display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(400px, 1fr)); */
   display: flex;
   flex-wrap: wrap-reverse;
 }
