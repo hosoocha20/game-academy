@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate, Outlet } from "react-router-dom";
 import ChessGameServer from "./ChessGameServer";
 
 const Game = ({ signedOn }) => {
@@ -6,14 +7,20 @@ const Game = ({ signedOn }) => {
   const [isGameOpened, setIsGameOpened] = useState(false);
   const [gameName, setGameName] = useState("");
 
+  const navigate = useNavigate();
+
   const openGame = (g, gn) => {
     setIsGameOpened(true);
+    navigate("onlineChess");
     setGameOpened(g);
     setGameName(gn);
   };
   const backToGame = (e) => {
     setIsGameOpened(false);
+    navigate("/game");
   };
+
+
 
   return (
     <div className="pt-[4.875rem] md:px-[10%] px-[5%] pb-[3rem] w-full h-full ">
@@ -54,10 +61,10 @@ const Game = ({ signedOn }) => {
               Back to Games
             </div>
           </div>
-
-          {gameOpened === "chessGameServer" && (
+          <Outlet />
+          {/* {gameOpened === "chessGameServer" && (
             <ChessGameServer signedOn={signedOn} />
-          )}
+          )} */}
         </div>
       )}
     </div>

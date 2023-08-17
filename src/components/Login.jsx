@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-
+import { useNavigate } from "react-router-dom";
 import SignInForm from './SignInForm'
 import SignUpForm from './SignUpForm';
 import LeftOverlayPanel from './LeftOverlayPanel';
@@ -9,6 +9,14 @@ const Login = ({handleActiveTabChange, signedOn, setSignedOn}) => {
   const [isAnimated, setIsAnimated] = useState(false);
   const [mobileLinkClicked, setMobileLinkClicked] = useState(false);
   const overlayBg ="bg-gradient-to-l from-gray-700 via-gray-900 to-black";
+
+
+  const navigate = useNavigate();
+
+  const handleSucccessfulLogin = () => {
+      navigate("/");
+  }
+    
 
 
     
@@ -21,7 +29,7 @@ const Login = ({handleActiveTabChange, signedOn, setSignedOn}) => {
           mobileLinkClicked ? "opacity-0" : ""
         }
         `}>
-        <SignInForm handleActiveTabChange={handleActiveTabChange} mobileLinkClicked={mobileLinkClicked} setMobileLinkClicked={setMobileLinkClicked} setSignedOn={setSignedOn}/>
+        <SignInForm handleSucccessfulLogin={handleSucccessfulLogin} mobileLinkClicked={mobileLinkClicked} setMobileLinkClicked={setMobileLinkClicked} setSignedOn={setSignedOn}/>
       </div>
       <div id="signUp"
         className={`absolute top-0 left-0 h-full w-full md:w-[60%] flex justify-center items-center md:transition-all md:duration-700 md:ease-in-out ${

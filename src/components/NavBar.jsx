@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import secureLocalStorage from "react-secure-storage";
 import GALogo from "../svg/logo.svg";
 import { SlMenu } from "react-icons/sl";
@@ -11,6 +12,18 @@ const NavBar = ({ handleActiveTabChange, signedOn, setSignedOn }) => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const [toggleDropdown, setToggleDropdown] = useState(false);
   const [uname, setUname] = useState(secureLocalStorage.getItem("uname"));
+
+  const navigate = useNavigate();
+  const viewNavigate = (newRoute) => {
+    // Navigate to the new route
+    if (!document.startViewTransition) {
+      return navigate(newRoute);
+    } else {
+      return document.startViewTransition(() => {
+        navigate(newRoute);
+      });
+    }
+  };
 
   const toggleMenuOnClick = (e) => {
     setToggleMenu(!toggleMenu);
@@ -54,7 +67,7 @@ const NavBar = ({ handleActiveTabChange, signedOn, setSignedOn }) => {
           <li>
             <button
               className="tabLink"
-              onClick={() => menuBarTabChange("home")}
+              onClick={() => viewNavigate("/")}
             >
               Home
             </button>
@@ -62,7 +75,7 @@ const NavBar = ({ handleActiveTabChange, signedOn, setSignedOn }) => {
           <li>
             <button
               className="tabLink"
-              onClick={() => menuBarTabChange("shop")}
+              onClick={() => viewNavigate("shop")}
             >
               Shop
             </button>
@@ -70,7 +83,7 @@ const NavBar = ({ handleActiveTabChange, signedOn, setSignedOn }) => {
           <li>
             <button
               className="tabLink"
-              onClick={() => menuBarTabChange("game")}
+              onClick={() => viewNavigate("game")}
             >
               Game
             </button>
@@ -78,7 +91,7 @@ const NavBar = ({ handleActiveTabChange, signedOn, setSignedOn }) => {
           <li>
             <button
               className="tabLink"
-              onClick={() => menuBarTabChange("guest")}
+              onClick={() => viewNavigate("guestbook")}
             >
               Guest Book
             </button>
@@ -90,7 +103,7 @@ const NavBar = ({ handleActiveTabChange, signedOn, setSignedOn }) => {
           className={`${
             signedOn ? "hidden" : "block"
           } h-full px-[2.8rem] rounded-[1.8rem] border-my-white-600 bg-my-white border text-my-black text-lg md:whitespace-nowrap`}
-          onClick={() => menuBarTabChange("login")}
+          onClick={() => viewNavigate("login")}
         >
           Sign in
         </button>

@@ -4,7 +4,7 @@ import { BsPerson } from "react-icons/bs";
 import { RxLockClosed } from "react-icons/rx";
 
 const SignInForm = ({
-  handleActiveTabChange,
+  handleSucccessfulLogin,
   mobileLinkClicked,
   setMobileLinkClicked,
   setSignedOn,
@@ -28,7 +28,7 @@ const SignInForm = ({
         secureLocalStorage.setItem("pw", pw);
         secureLocalStorage.setItem("state", true);
         setSignedOn(true);
-        handleActiveTabChange("home");
+        handleSucccessfulLogin();
         uname = "";
         pw = "";
 
