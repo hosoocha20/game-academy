@@ -8,7 +8,7 @@ import { FaUser } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 import { MdLogout } from "react-icons/md";
 
-const NavBar = ({ handleActiveTabChange, signedOn, setSignedOn }) => {
+const NavBar = ({signedOn, setSignedOn }) => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const [toggleDropdown, setToggleDropdown] = useState(false);
   const [uname, setUname] = useState(secureLocalStorage.getItem("uname"));
@@ -25,13 +25,15 @@ const NavBar = ({ handleActiveTabChange, signedOn, setSignedOn }) => {
     }
   };
 
+  const navigateNewTab = (route) =>{
+    setToggleMenu(false);
+    viewNavigate(route);
+  }
+
   const toggleMenuOnClick = (e) => {
     setToggleMenu(!toggleMenu);
   };
-  const menuBarTabChange = (tab) => {
-    handleActiveTabChange(tab);
-    setToggleMenu(!toggleMenu);
-  };
+
 
   const logoutOnClick = (e) => {
     setToggleDropdown(false);
@@ -45,7 +47,7 @@ const NavBar = ({ handleActiveTabChange, signedOn, setSignedOn }) => {
   }, [signedOn]);
 
   return (
-    <div className="Navbar flex justify-between md:flex-row  w-full h-[4.875rem] py-3 px-[10%] bg-black text-my-white z-[999] fixed top-0">
+    <div className="Navbar flex justify-between md:flex-row  w-screen h-[4.875rem] py-3 px-[10%] bg-black text-my-white z-[999] fixed top-0">
       <div className="logo pr-[2.8rem]">
         <a href="" className="w-full h-full flex items-center">
           <img
@@ -67,7 +69,7 @@ const NavBar = ({ handleActiveTabChange, signedOn, setSignedOn }) => {
           <li>
             <button
               className="tabLink"
-              onClick={() => viewNavigate("/")}
+              onClick={() => navigateNewTab("/")}
             >
               Home
             </button>
@@ -75,15 +77,15 @@ const NavBar = ({ handleActiveTabChange, signedOn, setSignedOn }) => {
           <li>
             <button
               className="tabLink"
-              onClick={() => viewNavigate("shop")}
+              onClick={() => navigateNewTab("shop")}
             >
-              Shop
+              Products
             </button>
           </li>
           <li>
             <button
               className="tabLink"
-              onClick={() => viewNavigate("game")}
+              onClick={() => navigateNewTab("game")}
             >
               Game
             </button>
@@ -91,7 +93,7 @@ const NavBar = ({ handleActiveTabChange, signedOn, setSignedOn }) => {
           <li>
             <button
               className="tabLink"
-              onClick={() => viewNavigate("guestbook")}
+              onClick={() => navigateNewTab("guestbook")}
             >
               Guest Book
             </button>
@@ -103,7 +105,7 @@ const NavBar = ({ handleActiveTabChange, signedOn, setSignedOn }) => {
           className={`${
             signedOn ? "hidden" : "block"
           } h-full px-[2.8rem] rounded-[1.8rem] border-my-white-600 bg-my-white border text-my-black text-lg md:whitespace-nowrap`}
-          onClick={() => viewNavigate("login")}
+          onClick={() => navigateNewTab("login")}
         >
           Sign in
         </button>
@@ -145,11 +147,6 @@ const NavBar = ({ handleActiveTabChange, signedOn, setSignedOn }) => {
           />
         )}
       </div>
-      {/* <div class="burger">
-        <div class="line1"></div>
-        <div class="line2"></div>
-        <div class="line3"></div>
-      </div> */}
     </div>
   );
 };

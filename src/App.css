@@ -354,7 +354,6 @@
 .game-grid{
   display:grid;
   grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
- 
   column-gap: 4.5rem;
   row-gap: 1rem;
 }
@@ -376,7 +375,7 @@
 .chessOnlineImg:hover {
   background-image: url('./imgs/rookWhite.png');
   background-position: 110% 0;
-  transform:scale(1.2);
+  transform:scale(1.05);
 }
 
 .chessLocalImg{
@@ -392,7 +391,7 @@
 }
 .chessLocalImg:hover {
   background-image: url('./imgs/kingWhite.png'), url('./imgs/kingBlack.png');
-  transform:scale(1.2);
+  transform:scale(1.05);
 }
 
 .comingSoonImg{
@@ -400,7 +399,7 @@
   background-color: #ebecf0;
 }
 .comingSoonImg:hover{
-  transform:scale(1.2);
+  transform:scale(1.05);
 }
 
 /*ChessGameServer.jsx CSS*/
@@ -410,7 +409,8 @@
 }
 .chessboard{
   flex-grow: 2;
-  min-width: 500px;
+  
+  
 }
 .chessboard-side{
   min-width: 300px;

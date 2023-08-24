@@ -58,6 +58,8 @@ const ChessGameServer = ({ signedOn }) => {
   const countOutRef = React.useRef();
   const getMoveRef = React.useRef();
 
+  const [gameResult, setGameResult] = useState("");
+
   //for Pairing
   const [isNotPaired, setIsNotPaired] = useState(null);
   const [openModal, setOpenModal] = useState(false);
@@ -83,6 +85,9 @@ const ChessGameServer = ({ signedOn }) => {
             to: `${binID}`,
             piece: `${data}`,
           });
+          if (data === 'kb' || data === 'kw'){
+            finishGame("won");
+          }
         } else {
           addMyMove({
             from: `${fromMove}`,
@@ -268,6 +273,10 @@ const ChessGameServer = ({ signedOn }) => {
     }
   };
 
+  const finishGame = (result) =>{
+    setGameResult(result);
+  }
+
   const quitGame = (e) => {
     if (signedOn && secureLocalStorage.getItem("gameID")) {
       fetch(
@@ -312,15 +321,7 @@ const ChessGameServer = ({ signedOn }) => {
     }
   };
 
-  //   useEffect(() => {
-  //     return () => {
-  //         // Anything in here is fired on component unmount.
-  //         if(isInChessGame){
-  //           quitGame();
-  //           console.log('quit')
-  //         }
-  //     };
-  // }, [])
+
 
   const closeModal = (e) => {
     clearInterval(countRef.current);
@@ -378,7 +379,7 @@ const ChessGameServer = ({ signedOn }) => {
       )}
       {openHowToPlay && (
         <div className="absolute bg-black/70 w-full h-full flex justify-center items-center">
-          <div className="relative bg-[#fefefe] rounded md:w-[60%] w-[80%] flex flex-col gap-[1rem]  rounded py-[1.5rem] px-[2.5rem]">
+          <div className="relative bg-[#fefefe] md:w-[60%] w-[80%] flex flex-col gap-[1rem]  rounded py-[1.5rem] px-[2.5rem]">
             <button
               className="absolute top-[1rem] right-[2rem]  text-[1.5rem]"
               onClick={(e) => setOpenHowToPlay(false)}
@@ -421,10 +422,12 @@ const ChessGameServer = ({ signedOn }) => {
         </div>
       )}
 
-      <div className="chessboard  h-full flex flex-col items-center">
+      <div className="chessboard  h-full  flex flex-col items-center">
         <div
-          className={`chessboard-container  w-full grid grid-cols-10 auto-rows-fr border rounded-[0.5rem] ${
-            !isInChessGame || !isMyturn ? "pointer-events-none" : ""
+          className={`chessboard-container  w-full  grid grid-cols-10 auto-rows-fr border rounded-[0.5rem] ${
+            !isInChessGame || !isMyturn
+              ? "pointer-events-none cursor-not-allowed"
+              : ""
           }`}
           id="chessboard-temp"
         >
@@ -1209,7 +1212,7 @@ const ChessGameServer = ({ signedOn }) => {
           {isInChessGame && isMyturn && (
             <div className="flex items-center md:gap-x-[1.5rem] gap-x-[0.8rem]">
               <button
-                className="border border-valid-green-light rounded px-[0.5em] py-[0.8em] bg-valid-green-light"
+                className="border border-valid-green-light2 rounded px-[0.5em] py-[0.8em] bg-valid-green-light2"
                 id="sendMoveBtn"
                 aria-label="Send Move"
                 onClick={postMyMove}
@@ -1265,7 +1268,7 @@ const ChessGameServer = ({ signedOn }) => {
             </div>
           )}
           {isInChessGame && (
-            <div className="flex flex-col gap-y-[1.5rem] mt-[2rem] border border-valid-green-dark bg-valid-green-light/80 rounded justify-center px-[1rem] py-[1rem]">
+            <div className="flex flex-col gap-y-[1.5rem] mt-[2rem] border border-valid-green-dark bg-valid-green-light rounded justify-center px-[1rem] py-[1rem]">
               <div id="gameStartData">
                 <p>
                   You have been matched with user <b>{opponentPlayer}</b>

@@ -10,7 +10,6 @@ const SignInForm = ({
   setSignedOn,
 }) => {
   const [signInResponseMsg, setSignInResponseMsg] = useState("");
-  const SecureLocalStorage = (e) => {};
 
   const signInSubmit = (e) => {
     e.preventDefault();
@@ -32,12 +31,6 @@ const SignInForm = ({
         uname = "";
         pw = "";
 
-        // var loginBtnValue = document.getElementById('login-nav-btn').value;
-        // //alert(loginBtnValue);
-        // if (loginBtnValue == "login"){
-        //   document.getElementById('loginNavText').textContent = "Logout";
-        //   document.getElementById('login-nav-btn').value = "logout";
-        //   document.getElementById("defaultOpen").click();
 
         return response.text();
       } else {

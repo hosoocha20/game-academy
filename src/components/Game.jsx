@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate, Outlet } from "react-router-dom";
-import ChessGameServer from "./ChessGameServer";
 
 const Game = ({ signedOn }) => {
   const [gameOpened, setGameOpened] = useState("gameMenu");
@@ -20,15 +19,13 @@ const Game = ({ signedOn }) => {
     navigate("/game");
   };
 
-
-
   return (
-    <div className="pt-[4.875rem] md:px-[10%] px-[5%] pb-[3rem] w-full h-full ">
+    <div className="pt-[4.875rem] md:px-[10%] px-[5%] pb-[3rem] w-full">
       {!isGameOpened && (
         <div className="mt-[2.5rem] flex flex-col gap-[1em]">
           <h2 className="text-[2em] text-center">Games</h2>
           <p className="text-center">Play some of the best classic games!</p>
-          <div className="game-buttons game-grid mt-[1.5em] w-full">
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] mt-[1.5em] w-full gap-x-[4.5rem] gap-y-[1rem]">
             <button
               className=" border rounded-[1rem] w-full   py-[4em] text-center chessOnlineImg"
               onClick={(e) => openGame("chessGameServer", "Chess Online")}
@@ -62,9 +59,6 @@ const Game = ({ signedOn }) => {
             </div>
           </div>
           <Outlet />
-          {/* {gameOpened === "chessGameServer" && (
-            <ChessGameServer signedOn={signedOn} />
-          )} */}
         </div>
       )}
     </div>

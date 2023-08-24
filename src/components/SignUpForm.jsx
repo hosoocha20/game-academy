@@ -40,21 +40,26 @@ const SignUpForm = ({ mobileLinkClicked, setMobileLinkClicked }) => {
       </h1>
       <form
         className="flex flex-col gap-[1.2rem] w-[70%] md:w-[45%] text-[1.2rem] md:text-[1rem] md:pt-0 pt-[12%] "
-        autocomplete="off"
+        autoComplete="off"
         onSubmit={signUpSubmit}
       >
-        {signUpResponseMsg && (
-          <li className="text-error-red-dark list-disc list-inside border-error-red-dark bg-error-red-light w-full py-[2%] pl-[6%] rounded invalidForm">
-            {signUpResponseMsg}
-          </li>
-        )}
+        {signUpResponseMsg &&
+          (signUpResponseMsg.includes("registered") ? (
+            <li className="text-valid-green-dark list-disc list-inside border-valid-green-dark bg-valid-green-light w-full py-[2%] pl-[6%] rounded">
+              {signUpResponseMsg}
+            </li>
+          ) : (
+            <li className="text-error-red-dark list-disc list-inside border-error-red-dark bg-error-red-light w-full py-[2%] pl-[6%] rounded invalidForm">
+              {signUpResponseMsg}
+            </li>
+          ))}
         <label className="relative">
           <input
             className=" border border-[#D0D0D0] focus:outline-none focus:border-[#696969] rounded w-full pl-[13%] pr-[4%] py-[2%]"
             type="text"
             id="uname-r"
             placeholder="Username"
-            autoComplete="new-password"
+            required
           />
           <span className="absolute top-0 flex items-center pl-[3%]  pt-[3%]  ">
             <BsPerson />
@@ -63,13 +68,16 @@ const SignUpForm = ({ mobileLinkClicked, setMobileLinkClicked }) => {
         <label className="relative">
           <input
             className=" border border-[#D0D0D0] focus:outline-none focus:border-[#696969] rounded w-full pl-[13%] pr-[4%] py-[2%]"
-            type="text"
+            type="email"
             id="email-r"
             placeholder="Email (Optional)"
-            autoComplete="new-password"
             pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
-            onInvalid={e => e.target.setCustomValidity('Please include an "@" in the email address')}
-            onInput={e => e.target.setCustomValidity('')}
+            onInvalid={(e) =>
+              e.target.setCustomValidity(
+                'Please include an "@" in the email address'
+              )
+            }
+            onInput={(e) => e.target.setCustomValidity("")}
           />
           <span className=" absolute top-0 flex items-center pl-[3%]  pt-[3%]  ">
             <HiOutlineMail />
@@ -79,9 +87,11 @@ const SignUpForm = ({ mobileLinkClicked, setMobileLinkClicked }) => {
           <input
             className=" border border-[#D0D0D0] focus:outline-none focus:border-[#696969] rounded w-full pl-[13%] pr-[4%] py-[2%]"
             type="password"
+            name="password"
+            autoComplete="new-password"
             id="pw-r"
             placeholder="Password"
-            autoComplete="new-password"
+            required
           />
           <span className=" absolute top-0 flex items-center pl-[3%]  pt-[3%]  ">
             <RxLockClosed />
