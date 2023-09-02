@@ -14,9 +14,7 @@ const Home = () => {
           </span>
         </h1>
         <div className="md:mt-[1.5rem] md:text-xl text-[1rem]">
-          <p>
-            Browse through our range of products
-          </p>
+          <p>Browse through our range of products</p>
           <p>Entertain yourself with a round of Chess</p>
           <p>Check out and become a part of our forum</p>
         </div>

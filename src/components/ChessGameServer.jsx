@@ -58,7 +58,6 @@ const ChessGameServer = ({ signedOn }) => {
   const countOutRef = React.useRef();
   const getMoveRef = React.useRef();
 
-  const [gameResult, setGameResult] = useState("");
 
   //for Pairing
   const [isNotPaired, setIsNotPaired] = useState(null);
@@ -85,9 +84,7 @@ const ChessGameServer = ({ signedOn }) => {
             to: `${binID}`,
             piece: `${data}`,
           });
-          if (data === 'kb' || data === 'kw'){
-            finishGame("won");
-          }
+
         } else {
           addMyMove({
             from: `${fromMove}`,
@@ -273,9 +270,7 @@ const ChessGameServer = ({ signedOn }) => {
     }
   };
 
-  const finishGame = (result) =>{
-    setGameResult(result);
-  }
+
 
   const quitGame = (e) => {
     if (signedOn && secureLocalStorage.getItem("gameID")) {
@@ -311,6 +306,7 @@ const ChessGameServer = ({ signedOn }) => {
           setStartGameLabel("Play Game");
           setIsInChessGame(false);
           setIsNotPaired(null);
+          setIsMyTurn(false);
           setIsQuitGame(true);
           setMyGameID("");
           setListOfTheirMoves([]);

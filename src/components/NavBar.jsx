@@ -8,7 +8,7 @@ import { FaUser } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 import { MdLogout } from "react-icons/md";
 
-const NavBar = ({signedOn, setSignedOn }) => {
+const NavBar = ({ signedOn, setSignedOn }) => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const [toggleDropdown, setToggleDropdown] = useState(false);
   const [uname, setUname] = useState(secureLocalStorage.getItem("uname"));
@@ -25,15 +25,14 @@ const NavBar = ({signedOn, setSignedOn }) => {
     }
   };
 
-  const navigateNewTab = (route) =>{
+  const navigateNewTab = (route) => {
     setToggleMenu(false);
     viewNavigate(route);
-  }
+  };
 
   const toggleMenuOnClick = (e) => {
     setToggleMenu(!toggleMenu);
   };
-
 
   const logoutOnClick = (e) => {
     setToggleDropdown(false);
@@ -49,14 +48,18 @@ const NavBar = ({signedOn, setSignedOn }) => {
   return (
     <div className="Navbar flex justify-between md:flex-row  w-screen h-[4.875rem] py-3 px-[10%] bg-black text-my-white z-[999] fixed top-0">
       <div className="logo pr-[2.8rem]">
-        <a href="" className="w-full h-full flex items-center">
+        <button
+          href=""
+          className="w-full h-full flex items-center"
+          onClick={() => navigateNewTab("/")}
+        >
           <img
             alt="Game Academy Logo"
             id="GA-logo"
             className="w-12 align-baseline min-w-[30px]"
             src={GALogo}
           />
-        </a>
+        </button>
       </div>
       <div
         className={`w-full absolute left-0 top-[-50vh] bg-black h-[50vh] md:static md:h-auto md:top-0 md:bg-transparent z-[-2] text-transparent transition-[color] ease-in duration-[1s] md:text-my-white  ${
@@ -67,26 +70,17 @@ const NavBar = ({signedOn, setSignedOn }) => {
       >
         <ul className="nav-links flex flex-col justify-center px-[10%] md:px-0 md:flex-row md:items-center w-full h-full gap-[10%] text-lg ">
           <li>
-            <button
-              className="tabLink"
-              onClick={() => navigateNewTab("/")}
-            >
+            <button className="tabLink" onClick={() => navigateNewTab("/")}>
               Home
             </button>
           </li>
           <li>
-            <button
-              className="tabLink"
-              onClick={() => navigateNewTab("shop")}
-            >
+            <button className="tabLink" onClick={() => navigateNewTab("shop")}>
               Products
             </button>
           </li>
           <li>
-            <button
-              className="tabLink"
-              onClick={() => navigateNewTab("game")}
-            >
+            <button className="tabLink" onClick={() => navigateNewTab("game")}>
               Game
             </button>
           </li>
@@ -116,7 +110,9 @@ const NavBar = ({signedOn, setSignedOn }) => {
           onClick={(e) => setToggleDropdown(!toggleDropdown)}
         >
           <FaUser />
-          <p className="md:text-[1rem] text-[0.9rem]">{uname}</p>
+          <p className="md:text-[1rem] text-[0.9rem] max-w-[8rem] truncate">
+            {uname}
+          </p>
           <IoIosArrowDown />
         </button>
         {toggleDropdown && (
