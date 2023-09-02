@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/hosoocha20/game-academy/static/css/main.74070dce.css",
-    "main.js": "/hosoocha20/game-academy/static/js/main.a10fc992.js",
-    "static/media/brick-v3.jpg": "/hosoocha20/game-academy/static/media/brick-v3.b91095b9ad83107b4603.jpg",
-    "static/media/kingBlack.png": "/hosoocha20/game-academy/static/media/kingBlack.678685408d364bd826e1.png",
-    "static/media/rookBlack.png": "/hosoocha20/game-academy/static/media/rookBlack.99a605ecaef78cd16605.png",
-    "static/media/kingWhite.png": "/hosoocha20/game-academy/static/media/kingWhite.202fdb6e81495ad2fab7.png",
-    "static/media/rookWhite.png": "/hosoocha20/game-academy/static/media/rookWhite.dff7f1ad09ebfc4938ac.png",
-    "static/media/logo.svg": "/hosoocha20/game-academy/static/media/logo.1ce603922d3e4af5ceeea91bc917ca29.svg",
-    "index.html": "/hosoocha20/game-academy/index.html",
-    "main.74070dce.css.map": "/hosoocha20/game-academy/static/css/main.74070dce.css.map",
-    "main.a10fc992.js.map": "/hosoocha20/game-academy/static/js/main.a10fc992.js.map"
+    "main.css": "/hosoocha20/static/css/main.548b6816.css",
+    "main.js": "/hosoocha20/static/js/main.3d6aeb10.js",
+    "static/media/brick-v3.jpg": "/hosoocha20/static/media/brick-v3.b91095b9ad83107b4603.jpg",
+    "static/media/kingBlack.png": "/hosoocha20/static/media/kingBlack.678685408d364bd826e1.png",
+    "static/media/rookBlack.png": "/hosoocha20/static/media/rookBlack.99a605ecaef78cd16605.png",
+    "static/media/kingWhite.png": "/hosoocha20/static/media/kingWhite.202fdb6e81495ad2fab7.png",
+    "static/media/rookWhite.png": "/hosoocha20/static/media/rookWhite.dff7f1ad09ebfc4938ac.png",
+    "static/media/logo.svg": "/hosoocha20/static/media/logo.1ce603922d3e4af5ceeea91bc917ca29.svg",
+    "index.html": "/hosoocha20/index.html",
+    "main.548b6816.css.map": "/hosoocha20/static/css/main.548b6816.css.map",
+    "main.3d6aeb10.js.map": "/hosoocha20/static/js/main.3d6aeb10.js.map"
   },
   "entrypoints": [
-    "static/css/main.74070dce.css",
-    "static/js/main.a10fc992.js"
+    "static/css/main.548b6816.css",
+    "static/js/main.3d6aeb10.js"
   ]
 }
