@@ -19,6 +19,11 @@ The features included in this app are:
 - Because past students can access and also use the same endpoints the online chess game may not operate as intended unless both users are using this website to verse eachother
   *(As the methods of using the endpoints in the client side is unique to each student)*
 
+  ## Technologies:
+  - ReactJS
+  - Javascript
+  - Tailwind CSS
+
 
 
 
